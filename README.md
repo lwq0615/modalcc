@@ -60,6 +60,7 @@ const config = ref({})
 // onModalInit方法会在每个模态框初始化时执行，可能是组件渲染时
 // 也可能是模态框展开时，取决于你何时渲染模态框内容
 onModalInit(props => {
+  // 此处的props就是下文中withModal传递过来的参数
   config.value = props
 })
 

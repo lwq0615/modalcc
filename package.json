@@ -1,13 +1,17 @@
 {
   "name": "modalc",
   "version": "1.0.0",
-  "description": "模态框最佳实践",
+  "description": "Vue3模态框最佳实践",
   "main": "dist/commonjs.js",
   "module": "dist/module.js",
   "types": "src/index.d.ts",
   "type": "module",
-  "author": "",
+  "author": "liweiqiang",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liweiqiang/modalc.git"
+  },
   "scripts": {
     "dev": "nodemon -L --watch src src/export/index.js",
     "build": "node src/export/index.js"

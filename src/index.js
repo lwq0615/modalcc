@@ -11,6 +11,9 @@ class ModalInstance {
   setProps(props) {
     this.#props = props
   }
+  getProps() {
+    return this.#props
+  }
 
   #exposed = null
   setExposed(exposed) {
@@ -38,11 +41,24 @@ function useModal(component) {
 }
 
 function withModal(props) {
+  console.log('withModal')
   const modal = modalStack.pop()
+  if (!modal) {
+    return
+  }
   return new Promise((resolve) => {
     Promise.resolve().then(() => {
-      modal?.setProps(props)
+      modal.setProps(props)
       resolve(modal.getExposed())
+    })
+  })
+}
+
+function useModalProps() {
+  console.log('useModalProps')
+  return new Promise((resolve) => {
+    Promise.resolve().then(() => {
+      resolve(modalStack[modalStack.length - 1]?.getProps())
     })
   })
 }

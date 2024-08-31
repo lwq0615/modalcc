@@ -5,5 +5,6 @@ $core$
 export {
   init,
   useModal,
-  withModal
+  withModal,
+  useModalProps
 }

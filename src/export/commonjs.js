@@ -5,5 +5,6 @@ $core$
 module.exports = {
   init,
   useModal,
-  withModal
+  withModal,
+  useModalProps
 }

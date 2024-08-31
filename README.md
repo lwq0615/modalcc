@@ -145,6 +145,11 @@ function setTitle() {
 </script>
 ```
 
+* 效果展示
+
+![效果展示](https://github.com/user-attachments/assets/1526443a-e0e9-4d9e-a3ea-6f509b22102a)
+
+
 ## ✨ 扩展能力
 
 自定义模态框模板，useModel接受两个参数，第一个是要嵌入模态框的组件（必填），第二个是自定义模态框模板（选填，会覆盖init配置的默认模态框）

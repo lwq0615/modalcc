@@ -38,10 +38,10 @@ class ModalInstance {
 }
 
 const modalStack = []
-function useModal(component) {
+function useModal(component, modalComponent = modalVue) {
   const modal = new ModalInstance()
   modalStack.push(modal)
-  const instance = h(modalVue, null, {
+  const instance = h(modalComponent, null, {
     default: () => h(Suspense, null, {
       default: () => h(component),
     }),

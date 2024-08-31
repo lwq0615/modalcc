@@ -147,7 +147,7 @@ function setTitle() {
 
 * 效果展示
 
-![效果展示](https://github.com/user-attachments/assets/1526443a-e0e9-4d9e-a3ea-6f509b22102a)
+![20240831-173051](https://github.com/user-attachments/assets/52c68caf-99cc-49b4-882c-9b446681083a)
 
 
 ## ✨ 扩展能力

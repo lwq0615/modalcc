@@ -7,11 +7,9 @@ function init(appMain, modal) {
 }
 
 class ModalInstance {
-  #props = reactive({})
+  #props
   setProps(props) {
-    Reflect.ownKeys(props).forEach(key => {
-      this.#props[key] = props[key]
-    })
+    this.#props = props
   }
   getProps() {
     return this.#props

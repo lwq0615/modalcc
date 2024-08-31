@@ -132,8 +132,8 @@ const props = reactive({
 
 /**
  * modal拿到模态框模板中defineExpose暴露的属性
- * props为模态框模板绑定的props，这边使用reactive是为了可以出发响应式更新
- * 使用普通对象也行，但是不具备响应式
+ * props为模态框模板绑定的props，这边使用reactive是为了可以触发响应式更新
+ * 也可以直接使用普通对象，但是不具备响应式
  */
 const modal = await withModal(props)
 

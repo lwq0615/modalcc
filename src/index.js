@@ -7,15 +7,29 @@ function init(appMain, modal) {
 }
 
 class ModalInstance {
-  #props
+  #props = reactive({})
   setProps(props) {
-    this.#props = props
+    Reflect.ownKeys(props).forEach(key => {
+      this.#props[key] = props[key]
+    })
   }
   getProps() {
     return this.#props
   }
+  #modalInitTask = []
+  addInitTask(func) {
+    if(typeof func !== 'function') {
+      return
+    }
+    this.#modalInitTask.push(func)
+  }
+  invokeModalInit() {
+    for (const task of this.#modalInitTask) {
+      task(this.getProps())
+    }
+  }
 
-  #exposed = null
+  #exposed
   setExposed(exposed) {
     this.#exposed = exposed
   }
@@ -30,18 +44,18 @@ function useModal(component) {
   const modal = new ModalInstance()
   modalStack.push(modal)
   const instance = h(modalVue, null, {
-    default: () => h(component),
+    default: () => h(Suspense, null, {
+      default: () => h(component),
+    }),
   })
   instance.appContext = app._context
   render(instance, document.body)
   const exposed = instance.component.exposed
   modal.setExposed(exposed)
-  modalStack.splice(0)
   return exposed
 }
 
 function withModal(props) {
-  console.log('withModal')
   const modal = modalStack.pop()
   if (!modal) {
     return
@@ -49,16 +63,16 @@ function withModal(props) {
   return new Promise((resolve) => {
     Promise.resolve().then(() => {
       modal.setProps(props)
+      modal.invokeModalInit()
       resolve(modal.getExposed())
     })
   })
 }
 
-function useModalProps() {
-  console.log('useModalProps')
-  return new Promise((resolve) => {
-    Promise.resolve().then(() => {
-      resolve(modalStack[modalStack.length - 1]?.getProps())
-    })
-  })
+function onModalInit(func) {
+  const modal = modalStack[modalStack.length - 1]
+  if (!modal) {
+    return
+  }
+  modal.addInitTask(func)
 }

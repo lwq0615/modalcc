@@ -7,6 +7,9 @@
   "types": "src/index.d.ts",
   "type": "module",
   "author": "liweiqiang",
+  "files": [
+    "dist"
+  ],
   "license": "ISC",
   "keywords": [
     "vue3",

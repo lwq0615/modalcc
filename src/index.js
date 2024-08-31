@@ -7,8 +7,9 @@ function init(appMain, modal) {
 }
 
 class ModalInstance {
-  setConfig(config) {
-    this.getExposed().setConfig?.(config)
+  #props
+  setProps(props) {
+    this.#props = props
   }
 
   #exposed = null
@@ -36,11 +37,11 @@ function useModal(component) {
   return exposed
 }
 
-function withModal(config) {
+function withModal(props) {
+  const modal = modalStack.pop()
   return new Promise((resolve) => {
-    void Promise.resolve().then(() => {
-      const modal = modalStack.pop()
-      modal?.setConfig(config)
+    Promise.resolve().then(() => {
+      modal?.setProps(props)
       resolve(modal.getExposed())
     })
   })

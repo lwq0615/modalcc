@@ -34,7 +34,7 @@ npm install modalcc
 yarn add modalcc
 ```
 
-* 创建模态框模板`modal.vue`，后续的模态框默认都以这个模态框为基础，此处以antd的模态框为例
+* onModalInit: 创建模态框模板`modal.vue`，后续的模态框默认都以这个模态框为基础，此处以antd的模态框为例
 
 ```vue
 <template>
@@ -76,7 +76,7 @@ defineExpose({
 </script>
 ```
 
-* 入口文件中配置 Modalcc
+* init: 入口文件中配置 Modalcc
 
 ```ts
 import Modal from './modal.vue'
@@ -89,7 +89,7 @@ init(app, Modal)
 app.mount('#app')
 ```
 
-* 需要拉起模态框的组件
+* useModal: 需要拉起模态框的组件
 
 ```vue
 <template>
@@ -112,7 +112,7 @@ function onShow() {
 </script>
 ```
 
-* 需要以模态框形式弹出的组件`Test.vue`
+* withModal: 需要以模态框形式弹出的组件`Test.vue`
 
 ```vue
 <template>

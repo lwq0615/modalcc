@@ -1,4 +1,4 @@
-<h1 align="center">Modalc</h1>
+<h1 align="center">Modalcc</h1>
 
 <div align="center">
   
@@ -6,12 +6,12 @@ Vue3模态框最佳实践
 
 [NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
 
-[npm-url]: https://www.npmjs.com/package/modalc
-[github-url]: https://github.com/lwq0615/modalc.git
+[npm-url]: https://www.npmjs.com/package/modalcc
+[github-url]: https://github.com/lwq0615/modalcc.git
   
 </div>
 
-## 🌈 Modalc 的重大突破
+## 🌈 Modalcc 的重大突破
 
 * 无需关心模态框的状态绑定
 * 无需要再把模态框书写到 template 中
@@ -29,9 +29,9 @@ Vue3模态框最佳实践
 * 安装依赖
 
 ```bash
-npm install modalc
+npm install modalcc
 // or
-yarn add modalc
+yarn add modalcc
 ```
 
 * 创建模态框模板`modal.vue`，后续的模态框默认都以这个模态框为基础，此处以antd的模态框为例
@@ -51,7 +51,7 @@ yarn add modalc
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { onModalInit } from 'modalc'
+import { onModalInit } from 'modalcc'
 
 const open = ref(false)
 // 动态绑定模态框属性
@@ -72,12 +72,12 @@ defineExpose({
 </script>
 ```
 
-* 入口文件中配置 Modalc
+* 入口文件中配置 Modalcc
 
 ```ts
 import Modal from './modal.vue'
 import { createApp } from 'vue'
-import { init } from 'modalc'
+import { init } from 'modalcc'
 
 const app = createApp(App)
 // 配置modal.vue为模态框的模板
@@ -93,7 +93,7 @@ app.mount('#app')
 </template>
 
 <script lang="ts" setup>
-import { useModal } from 'modalc'
+import { useModal } from 'modalcc'
 import Test from './Test.vue'
 
 /**
@@ -120,7 +120,7 @@ function onShow() {
 </template>
 
 <script setup lang="ts">
-import { withModal } from 'modalc'
+import { withModal } from 'modalcc'
 import { reactive } from 'vue'
 
 const props = reactive({

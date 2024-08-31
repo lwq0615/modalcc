@@ -1,5 +1,5 @@
 {
-  "name": "modalc",
+  "name": "modalcc",
   "version": "1.0.0",
   "description": "Vue3模态框最佳实践",
   "main": "dist/commonjs.js",
@@ -12,10 +12,10 @@
     "vue3",
     "modal"
   ],
-  "homepage": "https://github.com/lwq0615/modalc",
+  "homepage": "https://github.com/lwq0615/modalcc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lwq0615/modalc"
+    "url": "https://github.com/lwq0615/modalcc"
   },
   "scripts": {
     "dev": "nodemon -L --watch src src/export/index.js",

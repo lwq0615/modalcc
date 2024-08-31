@@ -68,6 +68,9 @@ defineExpose({
   show() {
     open.value = true
   },
+  close() {
+    open.value = false
+  }
 })
 </script>
 ```

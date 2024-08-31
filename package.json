@@ -1,0 +1,21 @@
+{
+  "name": "modalc",
+  "version": "1.0.0",
+  "description": "模态框最佳实践",
+  "main": "dist/commonjs.js",
+  "module": "dist/module.js",
+  "types": "src/index.d.ts",
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "dev": "nodemon -L --watch src src/export/index.js",
+    "build": "node src/export/index.js"
+  },
+  "peerDependencies": {
+    "vue": ">=3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

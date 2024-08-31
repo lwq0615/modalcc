@@ -8,9 +8,14 @@
   "type": "module",
   "author": "liweiqiang",
   "license": "ISC",
+  "keywords": [
+    "vue3",
+    "modal"
+  ],
+  "homepage": "https://github.com/lwq0615/modalc",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liweiqiang/modalc.git"
+    "url": "https://github.com/lwq0615/modalc"
   },
   "scripts": {
     "dev": "nodemon -L --watch src src/export/index.js",

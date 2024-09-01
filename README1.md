@@ -14,7 +14,7 @@ Vue3模态框最佳实践
 ## 🌈 Modalcc 的重大突破
 
 * 无需关心模态框的状态绑定
-* 无需要再把模态框书写到 template 中
+* 无需再把模态框书写到 template 中
 * 以命令式思维去调用模态框
 * 一个组件，多种行为
 
@@ -34,7 +34,7 @@ npm install modalcc
 yarn add modalcc
 ```
 
-* 创建模态框模板`modal.vue`，后续的模态框默认都以这个模态框为基础，此处以antd的模态框为例
+* onModalInit: 创建模态框模板`modal.vue`，后续的模态框默认都以这个模态框为基础，此处以antd的模态框为例
 
 ```vue
 <template>
@@ -60,6 +60,7 @@ const config = ref({})
 // onModalInit方法会在每个模态框初始化时执行，可能是组件渲染时
 // 也可能是模态框展开时，取决于你何时渲染模态框内容
 onModalInit(props => {
+  // 此处的props就是下文中withModal传递过来的参数
   config.value = props
 })
 
@@ -68,11 +69,14 @@ defineExpose({
   show() {
     open.value = true
   },
+  close() {
+    open.value = false
+  }
 })
 </script>
 ```
 
-* 入口文件中配置 Modalcc
+* init: 入口文件中配置 Modalcc
 
 ```ts
 import Modal from './modal.vue'
@@ -85,7 +89,7 @@ init(app, Modal)
 app.mount('#app')
 ```
 
-* 需要拉起模态框的组件
+* useModal: 需要拉起模态框的组件
 
 ```vue
 <template>
@@ -108,7 +112,7 @@ function onShow() {
 </script>
 ```
 
-* 需要以模态框形式弹出的组件
+* withModal: 需要以模态框形式弹出的组件`Test.vue`
 
 ```vue
 <template>
@@ -129,8 +133,8 @@ const props = reactive({
 
 /**
  * modal拿到模态框模板中defineExpose暴露的属性
- * props为模态框模板绑定的props，这边使用reactive是为了可以出发响应式更新
- * 使用普通对象也行，但是不具备响应式
+ * props为模态框模板绑定的props，这边使用reactive是为了可以触发响应式更新
+ * 也可以直接使用普通对象，但是不具备响应式
  */
 const modal = await withModal(props)
 
@@ -149,7 +153,14 @@ function setTitle() {
 
 ![20240831-173051](https://github.com/user-attachments/assets/52c68caf-99cc-49b4-882c-9b446681083a)
 
+## 🌍 不至于此
+
+在上述案例中，Test.vue作为模态框内容被插入模态框，但其实，他被包装为一个模态框的同时也可以作为一个普通的组件去使用，只要你不通过useModal去调用他，他就会以普通组件渲染，此时withModal将不会做任何事，也不会有任何返回，你可以通过这个特性去判断当前组件是否以模态框的形式被调用，这就是所谓的“一个组件，多种行为“
 
 ## ✨ 扩展能力
 
-自定义模态框模板，useModel接受两个参数，第一个是要嵌入模态框的组件（必填），第二个是自定义模态框模板（选填，会覆盖init配置的默认模态框）
+自定义模态框模板，useModal接受两个参数，第一个是要嵌入模态框的组件（必填），第二个是自定义模态框模板（选填，会覆盖init配置的默认模态框）
+
+```vue
+useModal(Test, OtherModal)
+```

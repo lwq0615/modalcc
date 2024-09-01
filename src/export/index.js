@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path';
 import { dirname } from "node:path"
 import { fileURLToPath } from "node:url"
+import imports from './importArr.js'
+import exportsText from './exportText.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -42,8 +44,19 @@ for (const type of types) {
     readFile(path.resolve(__dirname, `./${type}.js`))
   ]
   Promise.all(tasks).then(res => {
-    const [coreText, exportText] = res
-    const text = exportText.replace('$core$', coreText)
+    const [coreText, templateText] = res
+    let text = templateText.replace('$core$', coreText).replace('$export$', exportsText)
+    if (type === 'commonjs') {
+      const importText = imports.map(item => {
+        return `const { ${item[0]} } = require('${item[1]}')`
+      }).join('\n')
+      text = text.replace('$import$', importText)
+    }else if(type === 'module') {
+      const importText = imports.map(item => {
+        return `import { ${item[0]} } from '${item[1]}'`
+      }).join('\n')
+      text = text.replace('$import$', importText)
+    }
     writeFile(`./dist/${type}.js`, text)
   })
 }

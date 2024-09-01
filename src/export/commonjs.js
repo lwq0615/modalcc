@@ -1,10 +1,5 @@
-const { h, render, reactive, Suspense } = require('vue')
+$import$
 
 $core$
 
-module.exports = {
-  init,
-  useModal,
-  withModal,
-  onModalInit
-}
+module.exports = {$export$}

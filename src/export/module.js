@@ -1,10 +1,5 @@
-import { h, render, reactive, Suspense } from 'vue'
+$import$
 
 $core$
 
-export {
-  init,
-  useModal,
-  withModal,
-  onModalInit
-}
+export {$export$}

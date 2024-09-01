@@ -37,13 +37,26 @@ class ModalInstance {
   }
 }
 
-const modalStack = []
+function getModalInstance() {
+  return useAttrs()[modalSymbol]
+}
+
+const modalSymbol = '__modalcc'
 function useModal(component, modalComponent = modalVue) {
+  let props = {}
+  let slots = {}
+  if(Array.isArray(component)) {
+    component = component[0]
+    props = component[1] || {}
+    slots = component[2] || {}
+  }
   const modal = new ModalInstance()
-  modalStack.push(modal)
-  const instance = h(modalComponent, null, {
+  props[modalSymbol] = modal
+  const instance = h(modalComponent, {
+    [modalSymbol]: modal
+  }, {
     default: () => h(Suspense, null, {
-      default: () => h(component),
+      default: () => h(component, props, slots),
     }),
   })
   instance.appContext = app._context
@@ -54,7 +67,7 @@ function useModal(component, modalComponent = modalVue) {
 }
 
 function withModal(props) {
-  const modal = modalStack.pop()
+  const modal = getModalInstance()
   if (!modal) {
     return
   }
@@ -68,7 +81,7 @@ function withModal(props) {
 }
 
 function onModalInit(func) {
-  const modal = modalStack[modalStack.length - 1]
+  const modal = getModalInstance()
   if (!modal) {
     return
   }

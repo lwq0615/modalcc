@@ -1,6 +1,6 @@
 {
   "name": "modalcc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vue3模态框最佳实践",
   "main": "dist/commonjs.js",
   "module": "dist/module.js",
@@ -21,7 +21,7 @@
     "url": "https://github.com/lwq0615/modalcc"
   },
   "scripts": {
-    "dev": "nodemon -L --watch src src/export/index.js",
+    "dev": "nodemon -L -e js,ts --watch src --exec yarn build",
     "build": "node src/export/index.js"
   },
   "peerDependencies": {

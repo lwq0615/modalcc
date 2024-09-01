@@ -59,6 +59,10 @@ class ModalInstance {
   }
 }
 
+function getModalInstance() {
+  return useAttrs()[modalSymbol]
+}
+
 const modalSymbol = '__modalcc'
 function useModal(component, modalComponent = modalVue) {
   let props = {}
@@ -79,14 +83,26 @@ function useModal(component, modalComponent = modalVue) {
   })
   instance.appContext = app._context
   render(instance, document.body)
-  const exposed = instance.component.exposed
+  const exposed = new Proxy(instance.component.exposed, {
+    get(target, key) {
+      if(typeof target[key] === 'function' && !target[key].toString().startsWith('class')) {
+        return function(...args) {
+          const res = target[key](...args)
+          setTimeout(() => modal.invokeEmit(key, ...args), 0)
+          return res
+        }
+      }else {
+        return target[key]
+      }
+    }
+  })
   Reflect.defineMetadata(modalSymbol, modal, exposed)
   modal.setExposed(exposed)
   return exposed
 }
 
 function withModal(props) {
-  const modal = useAttrs()[modalSymbol]
+  const modal = getModalInstance()
   if (!modal) {
     return
   }
@@ -118,12 +134,4 @@ function onEmit(names, handle, modalExpose) {
     throw new Error('onEmit在非模态框内嵌组件内调用时，需要传入useModal的返回值作为第2个参数，指定要监听的模态框')
   }
   modal.addEmit(names, handle)
-}
-
-function emit(name, ...args) {
-  const modal = getModalInstance()
-  if (!modal) {
-    throw new Error('emit函数只能在模态框或模态框内嵌组件内调用')
-  }
-  modal.invokeEmit(name, ...args)
 }

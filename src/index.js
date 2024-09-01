@@ -87,9 +87,8 @@ function useModal(component, modalComponent = modalVue) {
     get(target, key) {
       if(typeof target[key] === 'function' && !target[key].toString().startsWith('class')) {
         return function(...args) {
-          const res = target[key](...args)
           setTimeout(() => modal.invokeEmit(key, ...args), 0)
-          return res
+          return target[key](...args)
         }
       }else {
         return target[key]

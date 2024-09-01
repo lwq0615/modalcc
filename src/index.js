@@ -16,7 +16,7 @@ class ModalInstance {
   }
   #modalInitTask = []
   addInitTask(func) {
-    if(typeof func !== 'function') {
+    if (typeof func !== 'function') {
       return
     }
     this.#modalInitTask.push(func)
@@ -26,26 +26,44 @@ class ModalInstance {
       task(this.getProps())
     }
   }
-
   #exposed
   setExposed(exposed) {
     this.#exposed = exposed
   }
-
   getExposed() {
     return this.#exposed
   }
-}
-
-function getModalInstance() {
-  return useAttrs()[modalSymbol]
+  #emits = {}
+  addEmit(names, handle) {
+    if (!names || !handle) {
+      return
+    }
+    if (!Array.isArray(names)) {
+      names = [names]
+    }
+    for (const name of names) {
+      if (this.#emits[name]) {
+        this.#emits[name].push(handle)
+      } else {
+        this.#emits[name] = [handle]
+      }
+    }
+  }
+  invokeEmit(name, ...args) {
+    if (!this.#emits[name]) {
+      return
+    }
+    for (const handle of this.#emits[name]) {
+      handle(...args)
+    }
+  }
 }
 
 const modalSymbol = '__modalcc'
 function useModal(component, modalComponent = modalVue) {
   let props = {}
   let slots = {}
-  if(Array.isArray(component)) {
+  if (Array.isArray(component)) {
     component = component[0]
     props = component[1] || {}
     slots = component[2] || {}
@@ -62,12 +80,13 @@ function useModal(component, modalComponent = modalVue) {
   instance.appContext = app._context
   render(instance, document.body)
   const exposed = instance.component.exposed
+  Reflect.defineMetadata(modalSymbol, modal, exposed)
   modal.setExposed(exposed)
   return exposed
 }
 
 function withModal(props) {
-  const modal = getModalInstance()
+  const modal = useAttrs()[modalSymbol]
   if (!modal) {
     return
   }
@@ -86,4 +105,25 @@ function onModalInit(func) {
     return
   }
   modal.addInitTask(func)
+}
+
+function onEmit(names, handle, modalExpose) {
+  let modal = null
+  if (modalExpose) {
+    modal = Reflect.getMetadata(modalSymbol, modalExpose)
+  } else {
+    modal = getModalInstance()
+  }
+  if (!modal) {
+    throw new Error('onEmit在非模态框内嵌组件内调用时，需要传入useModal的返回值作为第2个参数，指定要监听的模态框')
+  }
+  modal.addEmit(names, handle)
+}
+
+function emit(name, ...args) {
+  const modal = getModalInstance()
+  if (!modal) {
+    throw new Error('emit函数只能在模态框或模态框内嵌组件内调用')
+  }
+  modal.invokeEmit(name, ...args)
 }

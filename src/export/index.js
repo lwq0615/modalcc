@@ -48,12 +48,20 @@ for (const type of types) {
     let text = templateText.replace('$core$', coreText).replace('$export$', exportsText)
     if (type === 'commonjs') {
       const importText = imports.map(item => {
-        return `const { ${item[0]} } = require('${item[1]}')`
+        if (Array.isArray(item)) {
+          return `const { ${item[0]} } = require('${item[1]}')`
+        }else {
+          return `require('${item}')`
+        }
       }).join('\n')
       text = text.replace('$import$', importText)
-    }else if(type === 'module') {
+    } else if (type === 'module') {
       const importText = imports.map(item => {
-        return `import { ${item[0]} } from '${item[1]}'`
+        if (Array.isArray(item)) {
+          return `import { ${item[0]} } from '${item[1]}'`
+        }else {
+          return `import '${item}'`
+        }
       }).join('\n')
       text = text.replace('$import$', importText)
     }

@@ -130,7 +130,7 @@ function onEmit(names, handle, modalExpose) {
     modal = getModalInstance()
   }
   if (!modal) {
-    throw new Error('onEmit在非模态框内嵌组件内调用时，需要传入useModal的返回值作为第2个参数，指定要监听的模态框')
+    throw new Error('onEmit在非模态框内嵌组件内调用时，需要传入useModal的返回值作为第3个参数，指定要监听的模态框')
   }
   modal.addEmit(names, handle)
 }

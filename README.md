@@ -11,7 +11,7 @@ Vue3模态框最佳实践（V1.0.1）
   
 </div>
 
-> [API文档][api-url]
+* [API文档][api-url]
 
 [api-url]: https://github.com/lwq0615/modalcc/blob/master/doc/api.md
 

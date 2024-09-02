@@ -4,16 +4,14 @@
   
 Vue3模态框最佳实践（V1.0.1）
 
-[NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
+[NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]&nbsp;&nbsp;&nbsp;&nbsp;[API文档][api-url]
 
 [npm-url]: https://www.npmjs.com/package/modalcc
 [github-url]: https://github.com/lwq0615/modalcc.git
+[api-url]: https://github.com/lwq0615/modalcc/blob/master/doc/api.md
   
 </div>
 
-* [API文档][api-url]
-
-[api-url]: https://github.com/lwq0615/modalcc/blob/master/doc/api.md
 
 > 版本更新内容
 > * 修复了1.0.0多个模态框同时调用导致的异常

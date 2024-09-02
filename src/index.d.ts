@@ -27,7 +27,7 @@ declare namespace Modalcc {
    */
   function withModal<T = any>(modalProps?: any): Promise<T>
   /**
-   * 在模态框模板内调用，模态框初始化时，执行回调函数
+   * 在模态框模板内调用，接收内嵌组件传递的参数，在内嵌组件调用withModal时触发
    * @param func 回调函数，参数props为withModal传递的值
    */
   function onModalInit(func: (props: any) => void): void

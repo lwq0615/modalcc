@@ -11,6 +11,10 @@ Vue3模态框最佳实践（V1.0.1）
   
 </div>
 
+> [API文档][api-url]
+
+[api-url]: https://github.com/lwq0615/modalcc/blob/master/doc/api.md
+
 > 版本更新内容
 > * 修复了1.0.0多个模态框同时调用导致的异常
 > * 添加了事件处理模块

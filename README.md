@@ -2,7 +2,7 @@
 
 <div align="center">
   
-Vue3模态框最佳实践
+Vue3模态框最佳实践（V1.0.1）
 
 [NPM][npm-url]&nbsp;&nbsp;&nbsp;&nbsp;[Github][github-url]
 
@@ -10,6 +10,10 @@ Vue3模态框最佳实践
 [github-url]: https://github.com/lwq0615/modalcc.git
   
 </div>
+
+> 版本更新内容
+> * 修复了1.0.0多个模态框同时调用导致的异常
+> * 添加了事件处理模块
 
 ## 🌈 Modalcc 的重大突破
 
@@ -21,7 +25,7 @@ Vue3模态框最佳实践
 ## ✨ 特性
 
 * 🌍 适用于任何版本的 Vue3
-* 🌈 极低的学习成本，仅仅只有4个 API
+* 🌈 极低的学习成本与简单的API
 * 📦 提供完整的 TypeScript 类型定义文件
 
 ## ⚙️ 如何使用
@@ -135,6 +139,7 @@ const props = reactive({
  * modal拿到模态框模板中defineExpose暴露的属性
  * props为模态框模板绑定的props，这边使用reactive是为了可以触发响应式更新
  * 也可以直接使用普通对象，但是不具备响应式
+ * 当不需要传递模态框默认参数时，可以不调用此API
  */
 const modal = await withModal(props)
 

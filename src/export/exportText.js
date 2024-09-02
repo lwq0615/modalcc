@@ -3,5 +3,6 @@ export default `
   useModal,
   withModal,
   onModalInit,
-  onEmit
+  onEmit,
+  useEmit
 `

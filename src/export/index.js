@@ -8,11 +8,13 @@ import exportsText from './exportText.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// 需要支持的模块类型
 const types = [
   'commonjs',
   "module"
 ]
 
+// 读文件
 function readFile(filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, dataStr) => {
@@ -25,6 +27,7 @@ function readFile(filePath) {
   })
 }
 
+// 写文件
 function writeFile(filePath, text) {
   return new Promise((resolve, reject) => {
     fs.writeFile(filePath, text, (err) => {
@@ -37,6 +40,10 @@ function writeFile(filePath, text) {
   })
 }
 
+if(!fs.existsSync('./dist')) {
+  fs.mkdirSync('./dist')
+}
+
 const corePath = path.resolve(__dirname, '../index.js')
 for (const type of types) {
   const tasks = [
@@ -44,6 +51,7 @@ for (const type of types) {
     readFile(path.resolve(__dirname, `./${type}.js`))
   ]
   Promise.all(tasks).then(res => {
+    // 替换模板文本
     const [coreText, templateText] = res
     let text = templateText.replace('$core$', coreText).replace('$export$', exportsText)
     if (type === 'commonjs') {

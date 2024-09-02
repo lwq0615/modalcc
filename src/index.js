@@ -1,6 +1,9 @@
+
+const modalSymbol = '__modalcc'
 let app
 let modalVue
 
+// 初始化运行环境
 function init(appMain, modal) {
   app = appMain
   modalVue = modal
@@ -62,39 +65,24 @@ class ModalInstance {
 function getModalInstance() {
   return useAttrs()[modalSymbol]
 }
-
-const modalSymbol = '__modalcc'
 function useModal(component, modalComponent = modalVue) {
   let props = {}
   let slots = {}
   if (Array.isArray(component)) {
     component = component[0]
     props = component[1] || {}
-    slots = component[2] || {}
+    slots = component[2] || []
   }
   const modal = new ModalInstance()
   props[modalSymbol] = modal
   const instance = h(modalComponent, {
     [modalSymbol]: modal
   }, {
-    default: () => h(Suspense, null, {
-      default: () => h(component, props, slots),
-    }),
+    default: () => h(Suspense, null, [h(component, props, slots)]),
   })
   instance.appContext = app._context
   render(instance, document.body)
-  const exposed = new Proxy(instance.component.exposed, {
-    get(target, key) {
-      if(typeof target[key] === 'function' && !target[key].toString().startsWith('class')) {
-        return function(...args) {
-          setTimeout(() => modal.invokeEmit(key, ...args), 0)
-          return target[key](...args)
-        }
-      }else {
-        return target[key]
-      }
-    }
-  })
+  const exposed = instance.component.exposed
   Reflect.defineMetadata(modalSymbol, modal, exposed)
   modal.setExposed(exposed)
   return exposed
@@ -133,4 +121,25 @@ function onEmit(names, handle, modalExpose) {
     throw new Error('onEmit在非模态框内嵌组件内调用时，需要传入useModal的返回值作为第3个参数，指定要监听的模态框')
   }
   modal.addEmit(names, handle)
+}
+
+function useEmit(emits) {
+  const modal = getModalInstance()
+  if (!modal) {
+    throw new Error('useEmit必须在模态框模板组件内调用')
+  }
+  if(!emits) {
+    return
+  }
+  if(!Array.isArray(emits)) {
+    emits = [emits]
+  }
+  return function emit(name, ...args) {
+    if(!emits.includes(name)) {
+      return
+    }
+    Promise.resolve().then(() => {
+      modal.invokeEmit(name, ...args)
+    })
+  }
 }

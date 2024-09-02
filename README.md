@@ -97,7 +97,7 @@ init(app, Modal)
 app.mount('#app')
 ```
 
-* useModal: 需要拉起模态框的组件
+* useModal: 需要拉起模态框的组件（调用方）
 
 ```vue
 <template>

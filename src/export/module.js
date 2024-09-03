@@ -1,5 +1,0 @@
-$import$
-
-$core$
-
-export {$export$}

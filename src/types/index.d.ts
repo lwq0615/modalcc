@@ -1,10 +1,5 @@
-import { type App, type DefineComponent } from 'vue'
-
-// vue组件
-type VueComponent = DefineComponent<any, any, any>
-
-// vue h函数参数列表
-type VueHParams = [VueComponent, any?, any?]
+import { type App } from 'vue'
+import { VueComponent, VueHParams, Expose } from './types/vue'
 
 declare namespace Modalcc {
   /**
@@ -19,13 +14,13 @@ declare namespace Modalcc {
    * @param modalVue 覆盖默认的模态框模板
    * @returns 模态框模板defineExpose的对象，通过这个对象控制模态框行为
    */
-  function useModal<T = any>(component: VueComponent | VueHParams, modalVue?: VueComponent): T
+  function useModal<T = Expose>(component: VueComponent | VueHParams, modalVue?: VueComponent): T
   /**
    * 内嵌组件内调用，给模态框传递初始参数
    * @param modalProps 需要传递给模态框的数据，一般是需要设置的模态框props
    * @returns Promise，resolve为模态框defineExpose的对象，通过这个对象控制模态框行为
    */
-  function withModal<T = any>(modalProps?: any): Promise<T>
+  function withModal<T = Expose>(modalProps?: any): Promise<T>
   /**
    * 在模态框模板内调用，接收内嵌组件传递的参数，在内嵌组件调用withModal时触发
    * @param func 回调函数，参数props为withModal传递的值

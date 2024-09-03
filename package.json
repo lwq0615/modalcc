@@ -2,10 +2,9 @@
   "name": "modalcc",
   "version": "1.0.1",
   "description": "Vue3模态框最佳实践",
-  "main": "dist/commonjs.js",
-  "module": "dist/module.js",
-  "types": "src/index.d.ts",
-  "type": "module",
+  "main": "dist/index.js",
+  "types": "src/types/index.d.ts",
+  "type": "commonjs",
   "author": "liweiqiang",
   "files": [
     "dist"
@@ -22,13 +21,18 @@
   },
   "scripts": {
     "dev": "nodemon -L -e js,ts --watch src --exec yarn build",
-    "build": "node src/export/index.js"
+    "build": "babel src --out-dir dist --extensions \".ts\""
   },
   "peerDependencies": {
     "vue": ">=3.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-typescript": "^7.24.7",
+    "nodemon": "^3.1.4",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2"

@@ -21,7 +21,9 @@
   },
   "scripts": {
     "dev": "nodemon -L -e js,ts --watch src --exec yarn build",
-    "build": "babel src --out-dir dist --extensions \".ts\""
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "babel src --out-dir dist/cjs --extensions \".ts\"",
+    "build:esm": "babel src --out-dir dist/esm --extensions \".ts\""
   },
   "peerDependencies": {
     "vue": ">=3.0.0"

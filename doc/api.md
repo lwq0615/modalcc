@@ -30,9 +30,9 @@ function useModal<T = any>(
 /**
  * 内嵌组件内调用，给模态框传递初始参数
  * @param modalProps 需要传递给模态框的数据，一般是需要设置的模态框props
- * @returns Promise，resolve为模态框defineExpose的对象，通过这个对象控制模态框行为
+ * @returns 模态框defineExpose的对象，通过这个对象控制模态框行为
  */
-function withModal<T = any>(modalProps?: any): Promise<T>;
+function withModal<T = any>(modalProps?: any): T;
 ```
 
 ## onModalInit

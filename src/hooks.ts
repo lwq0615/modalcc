@@ -1,9 +1,13 @@
-import { getApp, getModalVue, modalSymbol } from "./context";
-import { getModalInstance, ModalInstance } from "./modal";
-import { Expose, VueComponent, VueHParams } from "./types/vue";
-import { h, render, Suspense, onUnmounted } from 'vue';
+import { getApp, getModalVue, modalSymbol } from './context';
+import { getModalInstance, ModalInstance } from './modal';
+import { Expose, VueComponent, VueHParams } from './types/vue';
+import { h, render, onUnmounted } from 'vue';
+import Async from '../../src/Async.vue';
 
-export function useModal(component: VueComponent | VueHParams, modalComponent: VueComponent = getModalVue()) {
+export function useModal(
+  component: VueComponent | VueHParams,
+  modalComponent: VueComponent = getModalVue()
+) {
   let props: Record<string, any> = {};
   let slots = {};
   if (Array.isArray(component)) {
@@ -18,9 +22,7 @@ export function useModal(component: VueComponent | VueHParams, modalComponent: V
     {
       [modalSymbol]: modal,
     },
-    {
-      default: () => h(Suspense, null, [h(component, props, slots)]),
-    }
+    [h(Async, { component, componentProps: props }, slots)]
   );
   instance.appContext = getApp()._context;
   render(instance, document.body);
@@ -38,13 +40,9 @@ export function withModal(props: any) {
   if (!modal) {
     return;
   }
-  return new Promise((resolve) => {
-    Promise.resolve().then(() => {
-      modal.setProps(props);
-      modal.invokeModalInit();
-      resolve(modal.getExposed());
-    });
-  });
+  modal.setProps(props);
+  modal.invokeModalInit();
+  return modal.getExposed();
 }
 
 export function onModalInit(func: Function) {
@@ -55,7 +53,11 @@ export function onModalInit(func: Function) {
   modal.addInitTask(func);
 }
 
-export function onEmit(names: string | string[], handle: Function, modalExpose: Expose) {
+export function onEmit(
+  names: string | string[],
+  handle: Function,
+  modalExpose: Expose
+) {
   let modal = null;
   modal = getModalInstance(modalExpose);
   if (!modal) {

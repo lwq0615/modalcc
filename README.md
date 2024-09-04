@@ -150,7 +150,7 @@ const props = reactive({
  * 也可以直接使用普通对象，但是不具备响应式
  * 当不需要传递模态框默认参数时，可以不调用此API
  */
-const modal = await withModal(props)
+const modal = withModal(props)
 
 function onClose() {
   modal.close()

@@ -12,6 +12,8 @@ Vue3模态框最佳实践（V1.0.1）
   
 </div>
 
+![image](https://github.com/user-attachments/assets/f905cf5a-4956-44c7-95cf-df584696b45a)
+
 
 > 版本更新内容
 > * 修复了1.0.0多个模态框同时调用导致的异常

@@ -87,12 +87,10 @@ export function useEmit(emits: string | string[]) {
   };
 }
 
-export function onDestroy(handle: Function, modalExpose: Expose) {
-  const modal = getModalInstance(modalExpose);
+export function onDestroy(handle: Function) {
+  const modal = getModalInstance();
   if (!modal) {
-    throw new Error(
-      'onDestroy在非模态框内嵌组件内调用时，需要传入useModal的返回值作为第2个参数，指定要监听的模态框'
-    );
+    throw new Error('onDestroy必须在模态框模板组件内调用');
   }
   modal.addDestroyTask(handle);
 }

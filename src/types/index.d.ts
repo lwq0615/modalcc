@@ -39,6 +39,11 @@ declare namespace Modalcc {
    * @param modalExpose 可以指定需要监听的弹窗实例，指定此参数时，该函数可以在任何位置调用
    */
   function onEmit(names: string | string[], handle: (...args: any[]) => void, modalExpose?: any): void
+  /**
+   * 在模态框模板内调用，调用useModal的组件（调用方）被销毁时触发
+   * @param handle 事件触发时执行的函数
+   */
+  function onDestroy(handle: Function): void
 }
 
 export = Modalcc

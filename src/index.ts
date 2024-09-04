@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { init } from './context'
-import { useModal, withModal, onModalInit, onEmit, useEmit } from './hooks'
+import { useModal, withModal, onModalInit, onEmit, useEmit, onDestroy } from './hooks'
 
 
 export {
@@ -9,5 +9,6 @@ export {
   withModal,
   onModalInit,
   onEmit,
-  useEmit
+  useEmit,
+  onDestroy
 }

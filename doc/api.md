@@ -73,3 +73,13 @@ function onEmit(
   modalExpose?: any
 ): void;
 ```
+
+## onDestroy
+
+```ts
+/**
+ * 在模态框模板内调用，调用useModal的组件（调用方）被销毁时触发
+ * @param handle 事件触发时执行的函数
+ */
+function onDestroy(handle: Function): void;
+```

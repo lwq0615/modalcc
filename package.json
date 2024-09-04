@@ -23,8 +23,8 @@
   "scripts": {
     "dev": "nodemon -L -e js,ts --watch src --exec yarn build",
     "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "babel src --out-dir dist/cjs --extensions \".ts\"",
-    "build:esm": "babel src --out-dir dist/esm --extensions \".ts\""
+    "build:cjs": "cross-env type=cjs babel src --out-dir dist/cjs --extensions \".ts\"",
+    "build:esm": "cross-env type=esm babel src --out-dir dist/esm --extensions \".ts\""
   },
   "peerDependencies": {
     "vue": ">=3.0.0"
@@ -34,7 +34,9 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-typescript": "^7.24.7",
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.4",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
   },
   "dependencies": {
